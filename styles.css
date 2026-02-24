@@ -106,3 +106,6 @@ body {
     .job-top { flex-direction: column; gap: 5px; }
     .actions { flex-direction: column; gap: 8px; }
 }
+.hidden {
+    display: none !important;
+}
