@@ -88,6 +88,21 @@ body {
 .delete-btn { background: #fca5a5; color: white; }
 .delete-btn:hover { background: #f87171; }
 
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.status-badge.interview { background: #16a34a; color: white; }
+.status-badge.rejected { background: #dc2626; color: white; }
+.status-badge.hidden { display: none; }
+
 /* Empty State */
 .empty-state {
     background: #ffffff;

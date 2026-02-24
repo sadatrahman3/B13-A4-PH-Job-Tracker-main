@@ -8,34 +8,45 @@ const jobCountText = document.getElementById("jobCountText");
 
 let currentFilter = "all";
 
-// Get fresh cards every time (important for delete)
 function getJobCards() {
     return document.querySelectorAll(".job-card");
 }
 
 function updateUI() {
     const jobCards = getJobCards();
-
-    let totalAvailable = jobCards.length; // only reduced on delete
+    let totalAvailable = jobCards.length;
     let interview = 0;
     let rejected = 0;
     let visible = 0;
 
     jobCards.forEach(card => {
         const status = card.dataset.status;
+        const badge = card.querySelector(".status-badge");
 
-        if (status === "interview") interview++;
-        if (status === "rejected") rejected++;
+        badge.classList.add("hidden");
+        badge.classList.remove("interview", "rejected");
+
+        if (status === "interview") {
+            interview++;
+            badge.classList.remove("hidden");
+            badge.classList.add("interview");
+            badge.textContent = "Interview";
+        }
+
+        if (status === "rejected") {
+            rejected++;
+            badge.classList.remove("hidden");
+            badge.classList.add("rejected");
+            badge.textContent = "Rejected";
+        }
 
         if (currentFilter === "all") {
             card.classList.remove("hidden");
             visible++;
-        } 
-        else if (status === currentFilter) {
+        } else if (status === currentFilter) {
             card.classList.remove("hidden");
             visible++;
-        } 
-        else {
+        } else {
             card.classList.add("hidden");
         }
     });
@@ -43,7 +54,6 @@ function updateUI() {
     availableCount.textContent = totalAvailable;
     interviewCount.textContent = interview;
     rejectedCount.textContent = rejected;
-
     jobCountText.textContent = `${visible} of ${totalAvailable} jobs`;
 
     handleEmptyState(visible);
