@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 <div class="container">
 
     <h1 class="title">Job Application Tracker</h1>
@@ -14,8 +13,8 @@
     <!-- Stats -->
     <div class="stats">
         <div class="stat-card">
-            <p>Available</p>
-            <h2 id="availableCount">0</h2>
+            <p>Total</p>
+            <h2 id="totalCount">0</h2>
         </div>
         <div class="stat-card">
             <p>Interview</p>
@@ -30,7 +29,7 @@
     <!-- Header -->
     <div class="jobs-header">
         <h2>Available Jobs</h2>
-        <span class="job-count" id="jobCountText">0 of 0 jobs</span>
+        <span class="job-count" id="jobCountText">0 jobs</span>
     </div>
 
     <!-- Filters -->
@@ -41,7 +40,65 @@
     </div>
 
     <!-- Jobs Container -->
-    <div class="jobs-container"></div>
+    <div class="jobs-container">
+
+        <!-- Job cards -->
+        <div class="job-card" data-status="all">
+            <h3>Mobile First Corp</h3>
+            <p class="position">React Native Developer</p>
+            <p class="meta">Remote • Full-time • $130k - $175k</p>
+            <p class="description">Build cross-platform mobile apps.</p>
+            <div class="actions">
+                <button class="btn interview-btn">INTERVIEW</button>
+                <button class="btn rejected-btn">REJECTED</button>
+                <button class="btn delete-btn">DELETE</button>
+            </div>
+        </div>
+
+        <div class="job-card" data-status="all">
+            <h3>WebFlow Agency</h3>
+            <p class="position">Web Designer</p>
+            <p class="meta">LA • Part-time • $80k - $120k</p>
+            <p class="description">Create modern web experiences.</p>
+            <div class="actions">
+                <button class="btn interview-btn">INTERVIEW</button>
+                <button class="btn rejected-btn">REJECTED</button>
+                <button class="btn delete-btn">DELETE</button>
+            </div>
+        </div>
+
+        <div class="job-card" data-status="all">
+            <h3>TechNova</h3>
+            <p class="position">Frontend Developer</p>
+            <p class="meta">NYC • Full-time • $110k - $150k</p>
+            <p class="description">Build responsive web applications.</p>
+            <div class="actions">
+                <button class="btn interview-btn">INTERVIEW</button>
+                <button class="btn rejected-btn">REJECTED</button>
+                <button class="btn delete-btn">DELETE</button>
+            </div>
+        </div>
+
+        <div class="job-card" data-status="all">
+            <h3>DesignHive</h3>
+            <p class="position">UI/UX Designer</p>
+            <p class="meta">Remote • Contract • $70k - $100k</p>
+            <p class="description">Create intuitive interfaces for apps.</p>
+            <div class="actions">
+                <button class="btn interview-btn">INTERVIEW</button>
+                <button class="btn rejected-btn">REJECTED</button>
+                <button class="btn delete-btn">DELETE</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+        <img src="no-jobs.png" alt="No jobs" class="empty-icon">
+        <p class="empty-text">No jobs available</p>
+        <p class="empty-subtext">Check back soon for new job opportunities</p>
+    </div>
 
 </div>
 

@@ -1,116 +1,74 @@
-const jobs = [
-    {
-        id: 1,
-        company: "Mobile First Corp",
-        position: "React Native Developer",
-        meta: "Remote • Full-time • $130k - $175k",
-        description: "Build cross-platform mobile apps.",
-        status: "all"
-    },
-    {
-        id: 2,
-        company: "WebFlow Agency",
-        position: "Web Designer",
-        meta: "LA • Part-time • $80k - $120k",
-        description: "Create modern web experiences.",
-        status: "all"
-    }
-];
+const jobsContainer = document.querySelector('.jobs-container');
+let jobCards = Array.from(document.querySelectorAll('.job-card'));
 
-const jobContainer = document.querySelector(".jobs-container");
-const filterButtons = document.querySelectorAll(".filters button");
+const filterButtons = document.querySelectorAll('.filters button');
+const emptyState = document.getElementById('emptyState');
 
-const availableCount = document.getElementById("availableCount");
-const interviewCount = document.getElementById("interviewCount");
-const rejectedCount = document.getElementById("rejectedCount");
-const jobCountText = document.getElementById("jobCountText");
+const totalCount = document.getElementById('totalCount');
+const interviewCount = document.getElementById('interviewCount');
+const rejectedCount = document.getElementById('rejectedCount');
+const jobCountText = document.getElementById('jobCountText');
 
 let currentFilter = "all";
 
-function renderJobs() {
-    jobContainer.innerHTML = "";
+// Update UI stats, visibility, and empty state
+function updateUI() {
+    let total = jobCards.length;
+    let interview = jobCards.filter(j=>j.dataset.status==="interview").length;
+    let rejected = jobCards.filter(j=>j.dataset.status==="rejected").length;
 
-    const filtered = jobs.filter(job => job.status === currentFilter);
-
-    if (filtered.length === 0) {
-        jobContainer.innerHTML = `
-            <div class="empty-state">
-                No jobs found in this category.
-            </div>
-        `;
-        return;
-    }
-
-    filtered.forEach(job => {
-        const card = document.createElement("div");
-        card.className = "job-card";
-
-        card.innerHTML = `
-            <div class="job-top">
-                <div>
-                    <h3>${job.company}</h3>
-                    <p class="position">${job.position}</p>
-                    <p class="meta">${job.meta}</p>
-                </div>
-            </div>
-
-            <p class="description">${job.description}</p>
-
-            ${job.status === "all" ? `
-            <div class="actions">
-                <button class="btn interview-btn">INTERVIEW</button>
-                <button class="btn rejected-btn">REJECTED</button>
-            </div>
-            ` : ""}
-        `;
-
-        if (job.status === "all") {
-            card.querySelector(".interview-btn").addEventListener("click", () => {
-                job.status = "interview";
-                updateUI();
-            });
-
-            card.querySelector(".rejected-btn").addEventListener("click", () => {
-                job.status = "rejected";
-                updateUI();
-            });
-        }
-
-        jobContainer.appendChild(card);
-    });
-}
-
-function updateCounts() {
-    const total = jobs.length;
-    const available = jobs.filter(j => j.status === "all").length;
-    const interview = jobs.filter(j => j.status === "interview").length;
-    const rejected = jobs.filter(j => j.status === "rejected").length;
-
-    availableCount.textContent = available;
+    totalCount.textContent = total;
     interviewCount.textContent = interview;
     rejectedCount.textContent = rejected;
 
+    // Filter visibility
     let visible = 0;
-    if (currentFilter === "all") visible = available;
-    if (currentFilter === "interview") visible = interview;
-    if (currentFilter === "rejected") visible = rejected;
+    jobCards.forEach(card => {
+        const status = card.dataset.status;
+        const show = currentFilter === "all" || status === currentFilter;
+        card.style.display = show ? "block" : "none";
+        if(show) visible++;
+    });
 
-    jobCountText.textContent = `${visible} of ${total} jobs`;
+    jobCountText.textContent = `${visible} job${visible!==1?'s':''}`;
+    emptyState.style.display = visible === 0 ? "flex" : "none";
 }
 
-function updateUI() {
-    updateCounts();
-    renderJobs();
+// Add event listeners to buttons for each card
+function attachCardEvents(card) {
+    const interviewBtn = card.querySelector('.interview-btn');
+    const rejectedBtn = card.querySelector('.rejected-btn');
+    const deleteBtn = card.querySelector('.delete-btn');
+
+    interviewBtn.addEventListener('click', ()=>{
+        card.dataset.status="interview";
+        updateUI();
+    });
+
+    rejectedBtn.addEventListener('click', ()=>{
+        card.dataset.status="rejected";
+        updateUI();
+    });
+
+    deleteBtn.addEventListener('click', ()=>{
+        card.remove();
+        jobCards = jobCards.filter(j=>j!==card); // remove from array
+        updateUI();
+    });
 }
 
-filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        filterButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+// Attach events to all initial cards
+jobCards.forEach(attachCardEvents);
 
+// Filter buttons
+filterButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        filterButtons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
         currentFilter = btn.dataset.filter;
         updateUI();
     });
 });
 
+// Initial render
 updateUI();
