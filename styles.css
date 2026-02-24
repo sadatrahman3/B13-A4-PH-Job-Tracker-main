@@ -46,19 +46,13 @@ body {
     font-size: 20px;
 }
 
-.green {
-    color: #16a34a;
-}
+.green { color: #16a34a; }
+.red { color: #dc2626; }
 
-.red {
-    color: #dc2626;
-}
-
-/* Jobs Header */
+/* Header */
 .jobs-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 15px;
 }
 
@@ -109,31 +103,12 @@ body {
 .position {
     font-size: 14px;
     color: #555;
-    margin: 3px 0;
 }
 
 .meta {
     font-size: 12px;
     color: #888;
-}
-
-.delete {
-    cursor: pointer;
-    font-size: 14px;
-    color: #aaa;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    font-size: 11px;
-    border-radius: 4px;
-    margin: 12px 0;
-}
-
-.not-applied {
-    background: #e5e7eb;
-    color: #374151;
+    margin-bottom: 10px;
 }
 
 .description {
@@ -142,7 +117,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* Buttons */
 .actions {
     display: flex;
     gap: 10px;
@@ -156,12 +130,23 @@ body {
     border: none;
 }
 
-.btn.interview {
+.interview-btn {
     background: #dcfce7;
     color: #16a34a;
 }
 
-.btn.rejected {
+.rejected-btn {
     background: #fee2e2;
     color: #dc2626;
+}
+
+/* Empty State */
+.empty-state {
+    background: #ffffff;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    color: #777;
+    font-size: 14px;
 }

@@ -11,84 +11,40 @@
 
     <h1 class="title">Job Application Tracker</h1>
 
-    <!-- Stats Cards -->
+    <!-- Stats -->
     <div class="stats">
         <div class="stat-card">
-            <p>Total</p>
-            <h2>8</h2>
+            <p>Available</p>
+            <h2 id="availableCount">0</h2>
         </div>
-
         <div class="stat-card">
             <p>Interview</p>
-            <h2 class="green">0</h2>
+            <h2 id="interviewCount" class="green">0</h2>
         </div>
-
         <div class="stat-card">
             <p>Rejected</p>
-            <h2 class="red">0</h2>
+            <h2 id="rejectedCount" class="red">0</h2>
         </div>
     </div>
 
-    <!-- Available Jobs -->
+    <!-- Header -->
     <div class="jobs-header">
         <h2>Available Jobs</h2>
-        <span class="job-count">8 jobs</span>
+        <span class="job-count" id="jobCountText">0 of 0 jobs</span>
     </div>
 
-    <!-- Filter Buttons -->
+    <!-- Filters -->
     <div class="filters">
-        <button class="active">All</button>
-        <button>Interview</button>
-        <button>Rejected</button>
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="interview">Interview</button>
+        <button data-filter="rejected">Rejected</button>
     </div>
 
-    <!-- Job Card 1 -->
-    <div class="job-card">
-        <div class="job-top">
-            <div>
-                <h3>Mobile First Corp</h3>
-                <p class="position">React Native Developer</p>
-                <p class="meta">Remote • Full-time • $130,000 - $175,000</p>
-            </div>
-            <span class="delete">🗑</span>
-        </div>
-
-        <span class="badge not-applied">NOT APPLIED</span>
-
-        <p class="description">
-            Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.
-        </p>
-
-        <div class="actions">
-            <button class="btn interview">INTERVIEW</button>
-            <button class="btn rejected">REJECTED</button>
-        </div>
-    </div>
-
-    <!-- Job Card 2 -->
-    <div class="job-card">
-        <div class="job-top">
-            <div>
-                <h3>WebFlow Agency</h3>
-                <p class="position">Web Designer & Developer</p>
-                <p class="meta">Los Angeles, CA • Part-time • $80,000 - $120,000</p>
-            </div>
-            <span class="delete">🗑</span>
-        </div>
-
-        <span class="badge not-applied">NOT APPLIED</span>
-
-        <p class="description">
-            Create stunning web experiences for high-profile clients. Must have portfolio and experience with modern web design trends.
-        </p>
-
-        <div class="actions">
-            <button class="btn interview">INTERVIEW</button>
-            <button class="btn rejected">REJECTED</button>
-        </div>
-    </div>
+    <!-- Jobs Container -->
+    <div class="jobs-container"></div>
 
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
