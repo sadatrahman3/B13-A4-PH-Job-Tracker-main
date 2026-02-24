@@ -1,70 +1,65 @@
-const jobsContainer = document.querySelector('.jobs-container');
-let jobCards = Array.from(document.querySelectorAll('.job-card'));
+const jobCards = document.querySelectorAll(".job-card");
+const filterButtons = document.querySelectorAll(".filters button");
 
-const filterButtons = document.querySelectorAll('.filters button');
-const emptyState = document.getElementById('emptyState');
-
-const totalCount = document.getElementById('totalCount');
-const interviewCount = document.getElementById('interviewCount');
-const rejectedCount = document.getElementById('rejectedCount');
-const jobCountText = document.getElementById('jobCountText');
+const availableCount = document.getElementById("availableCount");
+const interviewCount = document.getElementById("interviewCount");
+const rejectedCount = document.getElementById("rejectedCount");
+const jobCountText = document.getElementById("jobCountText");
 
 let currentFilter = "all";
 
-// Update UI stats, visibility, and empty state
+// Update counts and visibility
 function updateUI() {
-    let total = jobCards.length;
-    let interview = jobCards.filter(j=>j.dataset.status==="interview").length;
-    let rejected = jobCards.filter(j=>j.dataset.status==="rejected").length;
+    let available = 0, interview = 0, rejected = 0, visible = 0;
 
-    totalCount.textContent = total;
-    interviewCount.textContent = interview;
-    rejectedCount.textContent = rejected;
-
-    // Filter visibility
-    let visible = 0;
     jobCards.forEach(card => {
         const status = card.dataset.status;
-        const show = currentFilter === "all" || status === currentFilter;
-        card.style.display = show ? "block" : "none";
-        if(show) visible++;
+
+        if (status === "all") available++;
+        else if (status === "interview") interview++;
+        else if (status === "rejected") rejected++;
+
+        if (currentFilter === "all" || currentFilter === status) {
+            card.style.display = "block";
+            visible++;
+        } else {
+            card.style.display = "none";
+        }
     });
 
-    jobCountText.textContent = `${visible} job${visible!==1?'s':''}`;
-    emptyState.style.display = visible === 0 ? "flex" : "none";
+    availableCount.textContent = available;
+    interviewCount.textContent = interview;
+    rejectedCount.textContent = rejected;
+    jobCountText.textContent = `${visible} of ${jobCards.length} jobs`;
 }
 
-// Add event listeners to buttons for each card
-function attachCardEvents(card) {
-    const interviewBtn = card.querySelector('.interview-btn');
-    const rejectedBtn = card.querySelector('.rejected-btn');
-    const deleteBtn = card.querySelector('.delete-btn');
+// Button actions
+jobCards.forEach(card => {
+    const interviewBtn = card.querySelector(".interview-btn");
+    const rejectedBtn = card.querySelector(".rejected-btn");
+    const deleteBtn = card.querySelector(".delete-btn");
 
-    interviewBtn.addEventListener('click', ()=>{
-        card.dataset.status="interview";
+    if (interviewBtn) interviewBtn.addEventListener("click", () => {
+        card.dataset.status = "interview";
         updateUI();
     });
 
-    rejectedBtn.addEventListener('click', ()=>{
-        card.dataset.status="rejected";
+    if (rejectedBtn) rejectedBtn.addEventListener("click", () => {
+        card.dataset.status = "rejected";
         updateUI();
     });
 
-    deleteBtn.addEventListener('click', ()=>{
+    if (deleteBtn) deleteBtn.addEventListener("click", () => {
         card.remove();
-        jobCards = jobCards.filter(j=>j!==card); // remove from array
         updateUI();
     });
-}
-
-// Attach events to all initial cards
-jobCards.forEach(attachCardEvents);
+});
 
 // Filter buttons
-filterButtons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        filterButtons.forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
         currentFilter = btn.dataset.filter;
         updateUI();
     });
